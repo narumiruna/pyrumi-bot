@@ -76,7 +76,6 @@ class ChatGPT:
 if __name__ == '__main__':
     chatgtp = ChatGPT()
 
-    logger.info('bot token: {}', BOT_TOKEN)
     application = ApplicationBuilder().token(BOT_TOKEN).build()
 
     gpt_handler = CommandHandler('gpt', chatgtp.start_gpt)
