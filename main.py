@@ -22,11 +22,18 @@ class ChatGPT:
     def __init__(self):
         self.dialogues = {}
 
+    def is_valid(self, update: Update):
+        return update.message.chat_id in [-1001970525344, 102825484]
+
     async def create(self, messages):
         response = await openai.ChatCompletion.acreate(model="gpt-3.5-turbo", messages=messages)
         return [dict(choice.message) for choice in response.choices]
 
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        logger.info('message: {}', update.message)
+        if not self.is_valid(update):
+            return
+
         reply_id = update.message.reply_to_message.message_id
         if reply_id not in self.dialogues.keys():
             logger.info('reply_id: {} not exists', reply_id)
@@ -44,7 +51,17 @@ class ChatGPT:
         logger.info('messages: {}', messages)
 
     async def start_gpt(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        messages = [{'role': 'user', 'content': update.message.text.rstrip('/gpt')}]
+        logger.info('message: {}', update.message)
+        if not self.is_valid(update):
+            return
+
+        messages = [{
+            "role": "system",
+            "content": "你會在每句話的後面加上ぺこ。你只會使用繁體中文、日文或者是英文。"
+        }, {
+            'role': 'user',
+            'content': update.message.text.rstrip('/gpt')
+        }]
         response = await self.create(messages)
 
         chat_message = await context.bot.send_message(chat_id=update.effective_chat.id,
