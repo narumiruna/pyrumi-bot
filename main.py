@@ -13,8 +13,8 @@ BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
-def join(resposne_messages):
-    return '\n'.join([message['content'] for message in resposne_messages])
+def join_content(messages):
+    return '\n'.join([message['content'] for message in messages])
 
 
 class ChatGPT:
@@ -24,12 +24,7 @@ class ChatGPT:
 
     async def create(self, messages):
         response = await openai.ChatCompletion.acreate(model="gpt-3.5-turbo", messages=messages)
-
-        resposne_messages = []
-        for i, choice in enumerate(response.choices):
-            logger.info('#{} message: {}', i, choice.message)
-            resposne_messages.append(dict(choice.message))
-        return resposne_messages
+        return [dict(choice.message) for choice in response.choices]
 
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_id = update.message.reply_to_message.message_id
@@ -38,27 +33,27 @@ class ChatGPT:
             return
 
         messages = self.dialogues[reply_id] + [{'role': 'user', 'content': update.message.text}]
-        resposne_messages = await self.create(messages)
+        response = await self.create(messages)
 
-        new_message = await context.bot.send_message(chat_id=update.effective_chat.id,
-                                                     text=join(resposne_messages),
-                                                     reply_to_message_id=update.message.id)
+        chat_message = await context.bot.send_message(chat_id=update.effective_chat.id,
+                                                      text=join_content(response),
+                                                      reply_to_message_id=update.message.id)
 
-        self.dialogues[new_message.message_id] = messages + resposne_messages
+        self.dialogues[chat_message.message_id] = messages + response
 
         logger.info('messages: {}', messages)
 
     async def start_gpt(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         messages = [{'role': 'user', 'content': update.message.text.rstrip('/gpt')}]
-        resposne_messages = await self.create(messages)
+        response = await self.create(messages)
 
-        new_message = await context.bot.send_message(chat_id=update.effective_chat.id,
-                                                     text=join(resposne_messages),
-                                                     reply_to_message_id=update.message.id)
+        chat_message = await context.bot.send_message(chat_id=update.effective_chat.id,
+                                                      text=join_content(response),
+                                                      reply_to_message_id=update.message.id)
 
-        logger.info('new message id: {}', new_message.message_id)
-        logger.info('thread id: {}', new_message.message_thread_id)
-        self.dialogues[new_message.message_id] = messages + resposne_messages
+        logger.info('new message id: {}', chat_message.message_id)
+        logger.info('thread id: {}', chat_message.message_thread_id)
+        self.dialogues[chat_message.message_id] = messages + response
 
 
 if __name__ == '__main__':
