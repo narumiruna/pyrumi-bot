@@ -1,11 +1,14 @@
 [tool.poetry]
-name = "python-template"
+name = "chatgptbot"
 version = "0.1.0"
 description = ""
 authors = ["なるみ"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+openai = "^0.27.1"
+python-telegram-bot = "^20.1"
+loguru = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"
