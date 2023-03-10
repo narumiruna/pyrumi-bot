@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    strategy:
+      root: /home/narumi/chatgpt-telegram-bot
+      servicename: chatgpt-telegram-bot.service
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Rsync code
+        uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{ secrets.SSH_HOST }}
+          USER: ${{ secrets.SSH_USER }}
+          KEY: ${{ secrets.SSH_KEY }}
+          TARGET: ${{ strategy.root }}
+          ARGS: -avz --delete --exclude=/.git/ --exclude=/.github/ --exclude=.gitignore
+      - name: Restart service
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            sudo cp ${{ strategy.root }}/${{ strategy.servicename }} /etc/systemd/system/${{ strategy.servicename }}
+            sudo systemctl daemon-reload
+            sudo systemctl restart ${{ strategy.servicename }}
