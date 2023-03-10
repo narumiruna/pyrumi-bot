@@ -9,8 +9,7 @@ from telegram.ext import ContextTypes
 from telegram.ext import MessageHandler
 from telegram.ext import filters
 
-BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+SYSTEM_CONTENT = "你會在每個句子的最後加上ぺこ。例如：「今天天氣真好ぺこ。」、「我今天很開心ぺこ。」。"
 
 
 def join_content(messages):
@@ -57,7 +56,7 @@ class ChatGPT:
 
         messages = [{
             "role": "system",
-            "content": "你會在每句話的後面加上ぺこ。你只會使用繁體中文、日文或者是英文。"
+            "content": SYSTEM_CONTENT
         }, {
             'role': 'user',
             'content': update.message.text.rstrip('/gpt')
@@ -74,11 +73,14 @@ class ChatGPT:
 
 
 if __name__ == '__main__':
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
+    openai.api_key = os.environ.get('OPENAI_API_KEY')
+
     chatgtp = ChatGPT()
 
-    application = ApplicationBuilder().token(BOT_TOKEN).build()
+    application = ApplicationBuilder().token(bot_token).build()
 
-    gpt_handler = CommandHandler('gpt', chatgtp.start_gpt)
+    gpt_handler = CommandHandler('g', chatgtp.start_gpt)
     application.add_handler(gpt_handler)
 
     reply_handler = MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), chatgtp.reply)
