@@ -36,6 +36,7 @@ jobs:
 
       - name: Copy files
         run: |
+          mkdir -p ${{ env.WORKDIR }} 
           cp .env ${{ env.WORKDIR }}
           cp pyrumi-bot.plist ${{ env.PLIST_PATH }}
 
