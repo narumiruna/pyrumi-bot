@@ -1,1 +1,1 @@
-# python-template
+# pyrumi-bot
