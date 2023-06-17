@@ -19,12 +19,11 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def start_bot():
-    load_dotenv()
+    load_dotenv('.env')
 
     bot_token = os.environ.get('BOT_TOKEN')
     if bot_token is None:
         raise ValueError('BOT_TOKEN is not set')
-    print(bot_token)
     application = ApplicationBuilder().token(bot_token).build()
 
     echo_handler = CommandHandler(ECHO_COMMAND, echo)
