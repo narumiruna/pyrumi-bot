@@ -1,12 +1,10 @@
-name: Publish
+name: Python
 
 on:
   push:
-    tags:
-      - "v*.*.*"
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,8 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Poetry
-        uses: abatilo/actions-poetry@v2
+      - uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
 
@@ -28,9 +25,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: poetry
 
-      - name: Publish
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Lint
+        run: flake8 --verbose
+
+      - name: Test
         env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          poetry build -f wheel
-          poetry publish -u __token__ -p $PYPI_TOKEN
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: make cover
