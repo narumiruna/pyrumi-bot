@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from loguru import logger
 from telegram import Update
 from telegram.ext import ApplicationBuilder
+from telegram.ext import BaseHandler
 from telegram.ext import CommandHandler
 from telegram.ext import ContextTypes
 from telegram.ext import MessageHandler
@@ -32,6 +33,10 @@ def start_bot():
 
     application = ApplicationBuilder().token(bot_token).build()
 
+    def handle_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        logger.error('error: {}', context.error)
+
+    application.add_error_handler(handle_error)
     # echo command
     application.add_handler(CommandHandler(ECHO_COMMAND, echo))
 
