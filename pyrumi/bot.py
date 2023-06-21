@@ -36,7 +36,7 @@ def start_bot():
     def handle_error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.error('error: {}', context.error)
 
-    application.add_error_handler(handle_error)
+    application.add_error_handler(BaseHandler(handle_error))
     # echo command
     application.add_handler(CommandHandler(ECHO_COMMAND, echo))
 
