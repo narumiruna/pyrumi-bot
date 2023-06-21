@@ -10,6 +10,7 @@ from telegram.ext import MessageHandler
 from telegram.ext import filters
 
 from .chatgpt_bot import ChatGPTBot
+from .langchain_bot import LangChainBot
 
 ECHO_COMMAND = 'echo'
 
@@ -38,5 +39,9 @@ def start_bot():
     chatgpt_bot = ChatGPTBot.from_env()
     application.add_handler(CommandHandler('g', chatgpt_bot.start))
     application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), chatgpt_bot.reply))
+
+    # add langchain bot
+    langchain_bot = LangChainBot.from_env()
+    application.add_handler(CommandHandler(langchain_bot.chat_command, langchain_bot.chat))
 
     application.run_polling()
