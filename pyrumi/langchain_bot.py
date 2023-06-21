@@ -4,6 +4,7 @@ from typing import Optional
 from langchain.agents import AgentType
 from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
+from langchain.memory import ConversationBufferMemory
 from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -21,7 +22,13 @@ class LangChainBot:
         self.llm = ChatOpenAI(model_name=model_name)
         self.tools = [StockPriceTool(), StockPercentageChangeTool(), StockGetBestPerformingTool()]
 
-        self.agent = initialize_agent(self.tools, self.llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=False)
+        self.agent = initialize_agent(
+            self.tools,
+            self.llm,
+            agent=AgentType.OPENAI_FUNCTIONS,
+            verbose=False,
+            memory=ConversationBufferMemory(memory_key='chat_history'),
+        )
 
     @classmethod
     def from_env(cls):
