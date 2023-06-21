@@ -6,6 +6,10 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder
 from telegram.ext import CommandHandler
 from telegram.ext import ContextTypes
+from telegram.ext import MessageHandler
+from telegram.ext import filters
+
+from .chatgpt import ChatGPTBot
 
 ECHO_COMMAND = 'echo'
 
@@ -24,8 +28,15 @@ def start_bot():
     bot_token = os.environ.get('BOT_TOKEN')
     if bot_token is None:
         raise ValueError('BOT_TOKEN is not set')
+
     application = ApplicationBuilder().token(bot_token).build()
 
-    echo_handler = CommandHandler(ECHO_COMMAND, echo)
-    application.add_handler(echo_handler)
+    # echo command
+    application.add_handler(CommandHandler(ECHO_COMMAND, echo))
+
+    # add chatgpt bot
+    chatgpt_bot = ChatGPTBot.from_env()
+    application.add_handler(CommandHandler('g', chatgpt_bot.start))
+    application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), chatgpt_bot.reply))
+
     application.run_polling()

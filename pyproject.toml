@@ -5,12 +5,13 @@ description = ""
 authors = ["なるみ"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8.1,<4.0"
 openai = "^0.27.1"
 python-telegram-bot = "^20.1"
 loguru = "^0.6.0"
 python-dotenv = "^1.0.0"
 click = "^8.1.3"
+langchain = "^0.0.207"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"
