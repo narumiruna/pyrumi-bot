@@ -1,11 +1,12 @@
 import os
-from typing import List
 from typing import Optional
 
 import openai
 from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
+
+from .whitelist import in_whitelist
 
 
 def join_content(messages):
@@ -14,31 +15,16 @@ def join_content(messages):
 
 class ChatGPTBot:
 
-    def __init__(self,
-                 model_name: str = 'gpt-3.5-turbo',
-                 whitelist: Optional[List[str]] = None,
-                 system_content: Optional[str] = None):
+    def __init__(self, model_name: str = 'gpt-3.5-turbo', system_content: Optional[str] = None):
         self.model_name = model_name
-        self.whitelist = whitelist
         self.system_content = system_content
 
         self.dialogues = {}
 
     @classmethod
     def from_env(cls):
-        whitelist = os.getenv('BOT_WHITELIST')
         openai.api_key = os.environ.get('OPENAI_API_KEY')
-
-        if whitelist is not None:
-            whitelist = [int(chat_id.strip()) for chat_id in whitelist.split(',')]
-
-        return cls(whitelist=whitelist)
-
-    def _is_valid(self, update: Update):
-        if self.whitelist is None:
-            return True
-
-        return update.message.chat_id in self.whitelist
+        return cls()
 
     async def _create(self, messages):
         response = await openai.ChatCompletion.acreate(model=self.model_name, messages=messages)
@@ -46,7 +32,7 @@ class ChatGPTBot:
 
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.info('message: {}', update.message)
-        if not self._is_valid(update):
+        if not in_whitelist(update):
             return
 
         reply_id = update.message.reply_to_message.message_id
@@ -67,7 +53,7 @@ class ChatGPTBot:
 
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.info('message: {}', update.message)
-        if not self._is_valid(update):
+        if in_whitelist(update):
             return
 
         messages = [{'role': 'user', 'content': update.message.text.rstrip('/gpt')}]
