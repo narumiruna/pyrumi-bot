@@ -9,7 +9,7 @@ from telegram.ext import ContextTypes
 from telegram.ext import MessageHandler
 from telegram.ext import filters
 
-from .chatgpt import ChatGPTBot
+from .chatgpt_bot import ChatGPTBot
 
 ECHO_COMMAND = 'echo'
 
