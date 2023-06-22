@@ -7,11 +7,9 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.tools import ArxivQueryRun
 from langchain.tools import DuckDuckGoSearchRun
-from langchain.tools import OpenWeatherMapQueryRun
 from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
-from langchain.utilities import OpenWeatherMapAPIWrapper
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from loguru import logger
 from telegram import Update
@@ -32,7 +30,6 @@ class LangChainAgent:
         tools = [
             ArxivQueryRun(),
             DuckDuckGoSearchRun(),
-            OpenWeatherMapQueryRun(api_wrapper=OpenWeatherMapAPIWrapper()),
             PubmedQueryRun(),
             StockGetBestPerformingTool(),
             StockPercentageChangeTool(),

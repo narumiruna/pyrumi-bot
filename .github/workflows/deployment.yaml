@@ -30,7 +30,6 @@ jobs:
           echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} > .env
           echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
           echo WOLFRAM_ALPHA_APPID=${{ secrets.WOLFRAM_ALPHA_APPID }} >> .env
-          echo OPENWEATHERMAP_API_KEY=${{ secrets.OPENWEATHERMAP_API_KEY }} >> .env
 
       - name: Install
         run: |
