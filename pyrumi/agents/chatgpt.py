@@ -6,14 +6,14 @@ from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from .whitelist import in_whitelist
+from ..whitelist import in_whitelist
 
 
 def join_content(messages):
     return '\n'.join([message['content'] for message in messages])
 
 
-class ChatGPTBot:
+class ChatGPTAgent:
 
     def __init__(self, model_name: str = 'gpt-3.5-turbo', system_content: Optional[str] = None):
         self.model_name = model_name
