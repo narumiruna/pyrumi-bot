@@ -177,6 +177,20 @@ files = [
 ]
 
 [[package]]
+name = "arxiv"
+version = "1.4.7"
+description = "Python wrapper for the arXiv API: http://arxiv.org/help/api/"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "arxiv-1.4.7-py3-none-any.whl", hash = "sha256:22b8f610957bb6859a25fac9dc205ab6ba76d521791119a5762ea52625e398a0"},
+    {file = "arxiv-1.4.7.tar.gz", hash = "sha256:100c8d6b9cd04c7f55f11b34616beb7a1623ab0564b66161b4aeeeb8912c5806"},
+]
+
+[package.dependencies]
+feedparser = "*"
+
+[[package]]
 name = "async-timeout"
 version = "4.0.2"
 description = "Timeout context manager for asyncio programs"
@@ -736,6 +750,20 @@ files = [
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[[package]]
+name = "feedparser"
+version = "6.0.10"
+description = "Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "feedparser-6.0.10-py3-none-any.whl", hash = "sha256:79c257d526d13b944e965f6095700587f27388e50ea16fd245babe4dfae7024f"},
+    {file = "feedparser-6.0.10.tar.gz", hash = "sha256:27da485f4637ce7163cdeab13a80312b93b7d0c1b775bef4a47629a3110bca51"},
+]
+
+[package.dependencies]
+sgmllib3k = "*"
 
 [[package]]
 name = "filetype"
@@ -2241,6 +2269,16 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "sgmllib3k"
+version = "1.0.0"
+description = "Py3k port of sgmllib."
+optional = false
+python-versions = "*"
+files = [
+    {file = "sgmllib3k-1.0.0.tar.gz", hash = "sha256:7868fb1c8bfa764c1ac563d3cf369c381d1325d36124933a726f29fcdaa812e9"},
+]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -2723,4 +2761,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0"
-content-hash = "51aea21f5af6d5a485e2d316994cf2ca32afb1c3351488b2ac245667e8ec8fe8"
+content-hash = "17b37bb177802707be1a556b76a895e4e5dff01ff0ec71a8b78b2143d1e5385f"
