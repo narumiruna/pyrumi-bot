@@ -6,6 +6,7 @@ from langchain.tools import ArxivQueryRun
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
+from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 
 
@@ -17,6 +18,7 @@ def main():
         DuckDuckGoSearchRun(),
         PubmedQueryRun(),
         WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
+        YouTubeSearchTool(),
     ]
     agent = initialize_agent(tools=tools, llm=llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=True)
     while True:

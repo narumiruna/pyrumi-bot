@@ -9,6 +9,7 @@ from langchain.tools import ArxivQueryRun
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
+from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from loguru import logger
 from telegram import Update
@@ -34,6 +35,7 @@ class LangChainAgent:
             StockPercentageChangeTool(),
             StockPriceTool(),
             WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
+            YouTubeSearchTool(),
         ]
 
         memory = ConversationBufferMemory()
