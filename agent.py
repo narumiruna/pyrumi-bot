@@ -9,6 +9,8 @@ from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 
+from pyrumi.tools.web import WebBrowser
+
 
 def main():
     load_dotenv()
@@ -17,6 +19,7 @@ def main():
         ArxivQueryRun(),
         DuckDuckGoSearchRun(),
         PubmedQueryRun(),
+        WebBrowser(),
         WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
         YouTubeSearchTool(),
     ]
