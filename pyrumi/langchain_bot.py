@@ -5,7 +5,6 @@ from langchain.agents import AgentType
 from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
-from langchain.tools import DuckDuckGoSearchResults
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import PubmedQueryRun
 from loguru import logger
