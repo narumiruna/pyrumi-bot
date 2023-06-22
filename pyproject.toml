@@ -16,7 +16,6 @@ yfinance = "^0.2.20"
 unstructured = "^0.7.7"
 duckduckgo-search = "^3.8.3"
 arxiv = "^1.4.7"
-playwright = "^1.35.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"
