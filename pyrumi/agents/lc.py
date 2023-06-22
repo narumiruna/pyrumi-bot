@@ -14,10 +14,10 @@ from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from .tools import StockGetBestPerformingTool
-from .tools import StockPercentageChangeTool
-from .tools import StockPriceTool
-from .whitelist import in_whitelist
+from ..tools import StockGetBestPerformingTool
+from ..tools import StockPercentageChangeTool
+from ..tools import StockPriceTool
+from ..whitelist import in_whitelist
 
 
 class LangChainAgent:

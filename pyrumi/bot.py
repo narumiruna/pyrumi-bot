@@ -13,7 +13,7 @@ from telegram.ext import ContextTypes
 from telegram.ext import MessageHandler
 from telegram.ext import filters
 
-from .langchain_bot import LangChainAgent
+from .agents import LangChainAgent
 
 DEVELOPER_CHAT_ID = 102825484
 
