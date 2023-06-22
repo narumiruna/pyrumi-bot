@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 from langchain.agents import AgentType
 from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
+from langchain.memory import ConversationBufferMemory
 from langchain.tools import ArxivQueryRun
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import PubmedQueryRun
@@ -23,7 +24,12 @@ def main():
         WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
         YouTubeSearchTool(),
     ]
-    agent = initialize_agent(tools=tools, llm=llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=True)
+    memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
+    agent = initialize_agent(tools=tools,
+                             llm=llm,
+                             agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+                             memory=memory,
+                             verbose=True)
     while True:
         try:
             question = input("User: ")

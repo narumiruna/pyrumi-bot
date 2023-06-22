@@ -38,10 +38,10 @@ class LangChainAgent:
             YouTubeSearchTool(),
         ]
 
-        memory = ConversationBufferMemory()
+        memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
         self.agent = initialize_agent(tools=tools,
                                       llm=llm,
-                                      agent=AgentType.OPENAI_FUNCTIONS,
+                                      agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                       memory=memory,
                                       verbose=False)
 
