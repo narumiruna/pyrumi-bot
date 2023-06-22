@@ -4,18 +4,22 @@ from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.tools import ArxivQueryRun
 from langchain.tools import DuckDuckGoSearchRun
+from langchain.tools import OpenWeatherMapQueryRun
 from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
+from langchain.utilities import OpenWeatherMapAPIWrapper
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 
 
 def main():
     load_dotenv()
     llm = ChatOpenAI(model_name="gpt-3.5-turbo-0613")
+
     tools = [
         ArxivQueryRun(),
         DuckDuckGoSearchRun(),
+        OpenWeatherMapQueryRun(api_wrapper=OpenWeatherMapAPIWrapper()),
         PubmedQueryRun(),
         WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
         YouTubeSearchTool(),
