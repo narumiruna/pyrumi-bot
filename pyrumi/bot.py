@@ -67,9 +67,9 @@ def start_bot():
     application.add_handler(CommandHandler(ECHO_COMMAND, echo))
 
     # add chatgpt bot
-    chatgpt_bot = ChatGPTBot.from_env()
-    application.add_handler(CommandHandler('g', chatgpt_bot.start))
-    application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), chatgpt_bot.reply))
+    # chatgpt_bot = ChatGPTBot.from_env()
+    # application.add_handler(CommandHandler('g', chatgpt_bot.start))
+    # application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), chatgpt_bot.reply))
 
     # add langchain bot
     langchain_bot = LangChainBot.from_env()
