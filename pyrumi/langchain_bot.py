@@ -9,6 +9,7 @@ from langchain.tools import ArxivQueryRun
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
+from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -24,6 +25,7 @@ class LangChainBot:
 
     def __init__(self, model_name: Optional[str] = None):
         self.llm = ChatOpenAI(model_name=model_name)
+
         self.tools = [
             ArxivQueryRun(),
             DuckDuckGoSearchRun(),
@@ -31,7 +33,7 @@ class LangChainBot:
             StockGetBestPerformingTool(),
             StockPercentageChangeTool(),
             StockPriceTool(),
-            WolframAlphaQueryRun(),
+            WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
         ]
 
         self.memory = ConversationBufferMemory()
