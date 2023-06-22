@@ -6,8 +6,16 @@ from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.tools import ArxivQueryRun
+from langchain.tools import ClickTool
+from langchain.tools import CurrentWebPageTool
 from langchain.tools import DuckDuckGoSearchRun
+from langchain.tools import ExtractHyperlinksTool
+from langchain.tools import ExtractTextTool
+from langchain.tools import GetElementsTool
+from langchain.tools import NavigateBackTool
+from langchain.tools import NavigateTool
 from langchain.tools import PubmedQueryRun
+from langchain.tools import WolframAlphaQueryRun
 from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -30,6 +38,16 @@ class LangChainBot:
             StockGetBestPerformingTool(),
             StockPercentageChangeTool(),
             StockPriceTool(),
+            WolframAlphaQueryRun(),
+
+            # playwright
+            ClickTool(),
+            CurrentWebPageTool(),
+            ExtractHyperlinksTool(),
+            ExtractTextTool(),
+            GetElementsTool(),
+            NavigateBackTool(),
+            NavigateTool(),
         ]
 
         self.memory = ConversationBufferMemory()
