@@ -22,9 +22,7 @@ class StockPriceTool(BaseTool):
     description = "Useful for when you need to find out the price of stock. You should input the stock ticker used on the yfinance API"
 
     def _run(self, stockticker: str):
-        # print("i'm running")
         price_response = get_stock_price(stockticker)
-
         return price_response
 
     def _arun(self, stockticker: str):
@@ -48,7 +46,6 @@ class StockPercentageChangeTool(BaseTool):
 
     def _run(self, stockticker: str, days_ago: int):
         price_change_response = get_price_change_percent(stockticker, days_ago)
-
         return price_change_response
 
     def _arun(self, stockticker: str, days_ago: int):
@@ -70,7 +67,6 @@ class StockGetBestPerformingTool(BaseTool):
 
     def _run(self, stocktickers: List[str], days_ago: int):
         price_change_response = get_best_performing(stocktickers, days_ago)
-
         return price_change_response
 
     def _arun(self, stockticker: List[str], days_ago: int):
