@@ -30,13 +30,12 @@ class LangChainBot:
             PubmedQueryRun(),
         ]
 
-        self.agent = initialize_agent(
-            self.tools,
-            self.llm,
-            agent=AgentType.OPENAI_FUNCTIONS,
-            verbose=False,
-            memory=ConversationBufferMemory(memory_key='chat_history'),
-        )
+        self.memory = ConversationBufferMemory()
+        self.agent = initialize_agent(self.tools,
+                                      self.llm,
+                                      agent=AgentType.OPENAI_FUNCTIONS,
+                                      verbose=False,
+                                      memory=self.memory)
 
     @classmethod
     def from_env(cls):
@@ -47,23 +46,26 @@ class LangChainBot:
         if not in_whitelist(update):
             return
 
-        message = update.message.text.rstrip('/' + self.chat_command)
+        logger.info('update: {}', update)
 
-        agent_response = self.agent.run(message)
+        agent_resp = self.agent.run(update.message.text.rstrip('/' + self.chat_command))
+        logger.info('agent response: {}', agent_resp)
 
-        bot_message = await context.bot.send_message(chat_id=update.effective_chat.id,
-                                                     text=agent_response,
-                                                     reply_to_message_id=update.message.id)
-        logger.info('new message id: {}', bot_message.message_id)
-        logger.info('thread id: {}', bot_message.message_thread_id)
+        bot_resp = await context.bot.send_message(chat_id=update.effective_chat.id,
+                                                  text=agent_resp,
+                                                  reply_to_message_id=update.message.id)
+        logger.info('bot response: {}', bot_resp)
 
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not in_whitelist(update):
             return
 
-        agent_response = self.agent.run(update.message.text)
-        bot_message = await context.bot.send_message(chat_id=update.effective_chat.id,
-                                                     text=agent_response,
-                                                     reply_to_message_id=update.message.id)
-        logger.info('new message id: {}', bot_message.message_id)
-        logger.info('thread id: {}', bot_message.message_thread_id)
+        logger.info('update: {}', update)
+
+        agent_resp = self.agent.run(update.message.text)
+        logger.info('agent response: {}', agent_resp)
+
+        bot_resp = await context.bot.send_message(chat_id=update.effective_chat.id,
+                                                  text=agent_resp,
+                                                  reply_to_message_id=update.message.id)
+        logger.info('bot response: {}', bot_resp)
