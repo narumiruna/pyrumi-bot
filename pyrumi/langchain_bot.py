@@ -28,7 +28,6 @@ class LangChainBot:
             StockPercentageChangeTool(),
             StockGetBestPerformingTool(),
             DuckDuckGoSearchRun(),
-            DuckDuckGoSearchResults(),
             PubmedQueryRun(),
         ]
 
