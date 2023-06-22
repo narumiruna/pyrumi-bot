@@ -9,9 +9,9 @@ from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from .stock_tool import StockGetBestPerformingTool
-from .stock_tool import StockPercentageChangeTool
-from .stock_tool import StockPriceTool
+from .tools import StockGetBestPerformingTool
+from .tools import StockPercentageChangeTool
+from .tools import StockPriceTool
 from .whitelist import in_whitelist
 
 
