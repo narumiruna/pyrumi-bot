@@ -8,7 +8,6 @@ from loguru import logger
 from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import ApplicationBuilder
-from telegram.ext import BaseHandler
 from telegram.ext import CommandHandler
 from telegram.ext import ContextTypes
 from telegram.ext import MessageHandler
