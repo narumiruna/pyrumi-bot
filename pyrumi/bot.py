@@ -13,7 +13,7 @@ from telegram.ext import ContextTypes
 from telegram.ext import MessageHandler
 from telegram.ext import filters
 
-from .langchain_bot import LangChainBot
+from .langchain_bot import LangChainAgent
 
 DEVELOPER_CHAT_ID = 102825484
 
@@ -54,7 +54,7 @@ def start_bot():
     application.add_error_handler(error_handler)
 
     # add langchain bot
-    langchain_bot = LangChainBot.from_env()
+    langchain_bot = LangChainAgent.from_env()
     application.add_handler(CommandHandler(langchain_bot.chat_command, langchain_bot.chat))
     application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), langchain_bot.reply))
 

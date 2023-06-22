@@ -20,7 +20,7 @@ from .tools import StockPriceTool
 from .whitelist import in_whitelist
 
 
-class LangChainBot:
+class LangChainAgent:
     chat_command: str = 'lc'
 
     def __init__(self, model_name: Optional[str] = None):
