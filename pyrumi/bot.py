@@ -15,7 +15,6 @@ from telegram.ext import filters
 
 from .langchain_bot import LangChainBot
 
-ECHO_COMMAND = 'echo'
 DEVELOPER_CHAT_ID = 102825484
 
 
