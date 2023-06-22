@@ -74,5 +74,6 @@ def start_bot():
     # add langchain bot
     langchain_bot = LangChainBot.from_env()
     application.add_handler(CommandHandler(langchain_bot.chat_command, langchain_bot.chat))
+    application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), langchain_bot.reply))
 
     application.run_polling()

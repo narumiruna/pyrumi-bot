@@ -5,6 +5,8 @@ from langchain.agents import AgentType
 from langchain.agents import initialize_agent
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
+from langchain.tools import DuckDuckGoSearchRun
+from langchain.tools import PubmedQueryRun
 from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -20,7 +22,13 @@ class LangChainBot:
 
     def __init__(self, model_name: Optional[str] = None):
         self.llm = ChatOpenAI(model_name=model_name)
-        self.tools = [StockPriceTool(), StockPercentageChangeTool(), StockGetBestPerformingTool()]
+        self.tools = [
+            StockPriceTool(),
+            StockPercentageChangeTool(),
+            StockGetBestPerformingTool(),
+            DuckDuckGoSearchRun(),
+            PubmedQueryRun(),
+        ]
 
         self.agent = initialize_agent(
             self.tools,
@@ -43,6 +51,17 @@ class LangChainBot:
 
         agent_response = self.agent.run(message)
 
+        bot_message = await context.bot.send_message(chat_id=update.effective_chat.id,
+                                                     text=agent_response,
+                                                     reply_to_message_id=update.message.id)
+        logger.info('new message id: {}', bot_message.message_id)
+        logger.info('thread id: {}', bot_message.message_thread_id)
+
+    async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not in_whitelist(update):
+            return
+
+        agent_response = self.agent.run(update.message.text)
         bot_message = await context.bot.send_message(chat_id=update.effective_chat.id,
                                                      text=agent_response,
                                                      reply_to_message_id=update.message.id)
