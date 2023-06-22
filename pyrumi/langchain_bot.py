@@ -24,9 +24,9 @@ class LangChainBot:
     chat_command: str = 'lc'
 
     def __init__(self, model_name: Optional[str] = None):
-        self.llm = ChatOpenAI(model_name=model_name)
+        llm = ChatOpenAI(model_name=model_name)
 
-        self.tools = [
+        tools = [
             ArxivQueryRun(),
             DuckDuckGoSearchRun(),
             PubmedQueryRun(),
@@ -36,12 +36,12 @@ class LangChainBot:
             WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
         ]
 
-        self.memory = ConversationBufferMemory()
-        self.agent = initialize_agent(self.tools,
-                                      self.llm,
+        memory = ConversationBufferMemory()
+        self.agent = initialize_agent(tools=tools,
+                                      llm=llm,
                                       agent=AgentType.OPENAI_FUNCTIONS,
-                                      verbose=False,
-                                      memory=self.memory)
+                                      memory=memory,
+                                      verbose=False)
 
     @classmethod
     def from_env(cls):
