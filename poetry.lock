@@ -1907,6 +1907,25 @@ dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
+name = "pornhub-api"
+version = "0.3.0"
+description = ""
+optional = false
+python-versions = ">=3.8,<3.12"
+files = [
+    {file = "pornhub_api-0.3.0-py3-none-any.whl", hash = "sha256:9618986cafd4404f75416de203e6b134ef7162fa3de237f45031bc008ffa0a54"},
+    {file = "pornhub_api-0.3.0.tar.gz", hash = "sha256:e18c58bbda1b89c07cb40a3e020fde4e77eeec9a20c407064b5dae1f2dbc8345"},
+]
+
+[package.dependencies]
+pydantic = ">=1.4"
+requests = ">=2.23.0"
+
+[package.extras]
+aiohttp-backend = ["aiohttp (>=3.6.2)"]
+httpx-backend = ["httpx (>=0.23.1)"]
+
+[[package]]
 name = "pycodestyle"
 version = "2.9.1"
 description = "Python style guide checker"
@@ -2831,5 +2850,5 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 
 [metadata]
 lock-version = "2.0"
-python-versions = ">=3.8.1,<4.0"
-content-hash = "eaca31257bf34843aedd6b86045cf8c7a83fd6248080918a41bc36fe3d76b826"
+python-versions = ">=3.8.1,<3.12"
+content-hash = "49bb8b9dacd76d86fa6a1fe0ab306707e7bd96c3d89f4c66373fd536b9be95eb"
