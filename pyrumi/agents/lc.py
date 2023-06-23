@@ -11,6 +11,7 @@ from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
+from langtools import LoanCalculator
 from langtools import VISAFXRate
 from langtools import WebBrowser
 from loguru import logger
@@ -32,6 +33,7 @@ class LangChainAgent:
         tools = [
             ArxivQueryRun(),
             DuckDuckGoSearchRun(),
+            LoanCalculator(),
             PubmedQueryRun(),
             StockGetBestPerformingTool(),
             StockPercentageChangeTool(),

@@ -19,7 +19,7 @@ arxiv = "^1.4.7"
 wolframalpha = "^5.0.0"
 youtube-search = "^2.1.2"
 pornhub-api = "^0.3.0"
-langtools = "^0.2.0"
+langtools = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"
