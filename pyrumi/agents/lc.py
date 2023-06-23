@@ -41,7 +41,7 @@ class LangChainAgent:
         memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
         self.agent = initialize_agent(tools=tools,
                                       llm=llm,
-                                      agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+                                      agent=AgentType.OPENAI_FUNCTIONS,
                                       memory=memory,
                                       verbose=False)
 
