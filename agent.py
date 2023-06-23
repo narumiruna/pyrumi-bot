@@ -9,8 +9,7 @@ from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
-
-from pyrumi.tools.web_browser import WebBrowser
+from langtools import WebBrowser
 
 
 def main():

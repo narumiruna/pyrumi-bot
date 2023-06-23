@@ -11,6 +11,8 @@ from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
+from langtools import VISAFXRate
+from langtools import WebBrowser
 from loguru import logger
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -34,6 +36,8 @@ class LangChainAgent:
             StockGetBestPerformingTool(),
             StockPercentageChangeTool(),
             StockPriceTool(),
+            VISAFXRate(),
+            WebBrowser(),
             WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
             YouTubeSearchTool(),
         ]
