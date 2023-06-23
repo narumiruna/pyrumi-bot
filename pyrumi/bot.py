@@ -10,8 +10,6 @@ from telegram.constants import ParseMode
 from telegram.ext import ApplicationBuilder
 from telegram.ext import CommandHandler
 from telegram.ext import ContextTypes
-from telegram.ext import MessageHandler
-from telegram.ext import filters
 
 from .agents import LangChainAgent
 
@@ -56,6 +54,5 @@ def start_bot():
     # add langchain bot
     langchain_bot = LangChainAgent.from_env()
     application.add_handler(CommandHandler(langchain_bot.chat_command, langchain_bot.chat))
-    application.add_handler(MessageHandler(filters.REPLY & filters.TEXT & (~filters.COMMAND), langchain_bot.reply))
 
     application.run_polling()
