@@ -9,6 +9,7 @@ from langchain.tools import PubmedQueryRun
 from langchain.tools import WolframAlphaQueryRun
 from langchain.tools import YouTubeSearchTool
 from langchain.utilities.wolfram_alpha import WolframAlphaAPIWrapper
+from langtools import VISAFXRate
 from langtools import WebBrowser
 
 
@@ -22,6 +23,7 @@ def main():
         WebBrowser(),
         WolframAlphaQueryRun(api_wrapper=WolframAlphaAPIWrapper()),
         YouTubeSearchTool(),
+        VISAFXRate(),
     ]
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     agent = initialize_agent(tools=tools, llm=llm, agent=AgentType.OPENAI_FUNCTIONS, memory=memory, verbose=True)
