@@ -33,6 +33,9 @@ class ChatGPTAgent:
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.info('message: {}', update.message)
         if not in_whitelist(update):
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text='Your chat ID {} is not in the whitelist.'.format(update.effective_chat.id),
+                                     reply_to_message_id=update.message.id)
             return
 
         reply_id = update.message.reply_to_message.message_id
@@ -54,6 +57,9 @@ class ChatGPTAgent:
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.info('message: {}', update.message)
         if in_whitelist(update):
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text='Your chat ID {} is not in the whitelist.'.format(update.effective_chat.id),
+                                     reply_to_message_id=update.message.id)
             return
 
         messages = [{'role': 'user', 'content': update.message.text.rstrip('/gpt')}]

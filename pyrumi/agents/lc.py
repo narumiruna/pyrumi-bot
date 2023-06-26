@@ -58,6 +58,9 @@ class LangChainAgent:
 
     async def chat(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not in_whitelist(update):
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text='Your chat ID {} is not in the whitelist.'.format(update.effective_chat.id),
+                                     reply_to_message_id=update.message.id)
             return
 
         logger.info('update: {}', update)
@@ -72,6 +75,9 @@ class LangChainAgent:
 
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         if not in_whitelist(update):
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text='Your chat ID {} is not in the whitelist.'.format(update.effective_chat.id),
+                                     reply_to_message_id=update.message.id)
             return
 
         logger.info('update: {}', update)
