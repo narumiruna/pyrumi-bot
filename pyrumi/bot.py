@@ -47,12 +47,12 @@ def start_bot():
     if bot_token is None:
         raise ValueError('BOT_TOKEN is not set')
 
-    application = ApplicationBuilder().token(bot_token).build()
+    app = ApplicationBuilder().token(bot_token).build()
 
-    application.add_error_handler(error_handler)
+    app.add_error_handler(error_handler)
 
     # add langchain bot
     langchain_bot = LangChainAgent.from_env()
-    application.add_handler(CommandHandler(langchain_bot.chat_command, langchain_bot.chat))
+    app.add_handler(CommandHandler(langchain_bot.chat_command, langchain_bot.chat))
 
-    application.run_polling()
+    app.run_polling()
