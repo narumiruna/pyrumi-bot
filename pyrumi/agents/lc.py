@@ -57,35 +57,33 @@ class LangChainAgent:
         return cls(model_name=model_name)
 
     async def chat(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        chat_id = update.effective_chat.id
         if not in_whitelist(update):
-            context.bot.send_message(chat_id=update.effective_chat.id,
-                                     text='Your chat ID {} is not in the whitelist.'.format(update.effective_chat.id),
-                                     reply_to_message_id=update.message.id)
+            await context.bot.send_message(chat_id=chat_id,
+                                           text='Your chat ID {} is not in the whitelist.'.format(chat_id),
+                                           reply_to_message_id=update.message.id)
             return
 
         logger.info('update: {}', update)
 
-        agent_resp = self.agent.run(update.message.text.rstrip('/' + self.chat_command))
-        logger.info('agent response: {}', agent_resp)
+        response = self.agent.run(update.message.text.rstrip('/' + self.chat_command))
+        logger.info('response: {}', response)
 
-        bot_resp = await context.bot.send_message(chat_id=update.effective_chat.id,
-                                                  text=agent_resp,
-                                                  reply_to_message_id=update.message.id)
-        logger.info('bot response: {}', bot_resp)
+        message = await context.bot.send_message(chat_id=chat_id, text=response, reply_to_message_id=update.message.id)
+        logger.info('message: {}', message)
 
     async def reply(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        chat_id = update.effective_chat.id
         if not in_whitelist(update):
-            context.bot.send_message(chat_id=update.effective_chat.id,
-                                     text='Your chat ID {} is not in the whitelist.'.format(update.effective_chat.id),
+            context.bot.send_message(chat_id=chat_id,
+                                     text='Your chat ID {} is not in the whitelist.'.format(chat_id),
                                      reply_to_message_id=update.message.id)
             return
 
         logger.info('update: {}', update)
 
-        agent_resp = self.agent.run(update.message.text)
-        logger.info('agent response: {}', agent_resp)
+        response = self.agent.run(update.message.text)
+        logger.info('response: {}', response)
 
-        bot_resp = await context.bot.send_message(chat_id=update.effective_chat.id,
-                                                  text=agent_resp,
-                                                  reply_to_message_id=update.message.id)
-        logger.info('bot response: {}', bot_resp)
+        message = await context.bot.send_message(chat_id=chat_id, text=response, reply_to_message_id=update.message.id)
+        logger.info('message: {}', message)
